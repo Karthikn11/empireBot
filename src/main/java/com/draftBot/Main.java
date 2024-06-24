@@ -10,9 +10,14 @@ import javax.security.auth.login.LoginException;
 public class Main {
 
     public static void main(String[] args) throws LoginException {
-        JDA jda = JDABuilder.createDefault("MTI1Mzc1Njg2NjgwMzEzODYyMQ.GonQst.4Uu-PtDZfVs0b8h_zuGTTeB5kFRL7XCHQsMm-g").enableIntents(GatewayIntent.MESSAGE_CONTENT)
+        Tracker tracker = new Tracker();
+        String specifiedChannel = "834274579861733386";
+        JDA jda = JDABuilder.createDefault(Config.get("TOKEN")).enableIntents(GatewayIntent.MESSAGE_CONTENT)
+                .enableIntents(GatewayIntent.GUILD_MODERATION)
                 .build();
-        jda.addEventListener(new Listeners());
-        jda.addEventListener(new Draft());
+        jda.addEventListener(new Listeners(tracker, specifiedChannel));
+        jda.addEventListener(new Draft(tracker));
+
+
     }
 }
