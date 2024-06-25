@@ -34,19 +34,12 @@ public class Listeners extends ListenerAdapter {
             if (message.getMentions().getUsers().isEmpty()) {
                 return;
             }
-
-            // Get the first mentioned member (you can adjust this logic as needed)
             Member mentionedMember = message.getMember();
-
-            // Get the category of the current channel
             Category category = channel.getParentCategory();
             if (category == null) {
-                // If the channel is not in a category, handle appropriately
                 event.getChannel().sendMessage("This channel is not in a category, unable to create a new channel.").queue();
                 return;
             }
-
-            // Create a new text channel for the mentioned user under the same category
             String newChannelName = mentionedMember.getUser().getName() + "-channel";
             category.createTextChannel(newChannelName).queue(newChannel -> {
                 newChannel.sendMessage(mentionedMember.getAsMention() + ", this is your draft channel!").queue();
